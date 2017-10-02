@@ -1,0 +1,217 @@
+%%
+%% This is file `lexample.tex', 
+%% Sample file for siam macros for use with LaTeX 2e
+%% 
+%% October 1, 1995
+%%
+%% Version 1.0
+%% 
+%% You are not allowed to change this file. 
+%% 
+%% You are allowed to distribute this file under the condition that 
+%% it is distributed together with all of the files in the siam macro 
+%% distribution. These are:
+%%
+%%  siamltex.cls (main LaTeX macro file for SIAM)
+%%  siamltex.sty (includes siamltex.cls for compatibility mode)
+%%  siam10.clo   (size option for 10pt papers)
+%%  subeqn.clo   (allows equation numbners with lettered subelements)
+%%  siam.bst     (bibliographic style file for BibTeX)
+%%  docultex.tex (documentation file)
+%%  lexample.tex (this file)
+%%
+%% If you receive only some of these files from someone, complain! 
+%% 
+%% You are NOT ALLOWED to distribute this file alone. You are NOT 
+%% ALLOWED to take money for the distribution or use of either this 
+%% file or a changed version, except for a nominal charge for copying 
+%% etc. 
+%% \CharacterTable
+%%  {Upper-case    \A\B\C\D\E\F\G\H\I\J\K\L\M\N\O\P\Q\R\S\T\U\V\W\X\Y\Z
+%%   Lower-case    \a\b\c\d\e\f\g\h\i\j\k\l\m\n\o\p\q\r\s\t\u\v\w\x\y\z
+%%   Digits        \0\1\2\3\4\5\6\7\8\9
+%%   Exclamation   \!     Double quote  \"     Hash (number) \#
+%%   Dollar        \$     Percent       \%     Ampersand     \&
+%%   Acute accent  \'     Left paren    \(     Right paren   \)
+%%   Asterisk      \*     Plus          \+     Comma         \,
+%%   Minus         \-     Point         \.     Solidus       \/
+%%   Colon         \:     Semicolon     \;     Less than     \<
+%%   Equals        \=     Greater than  \>     Question mark \?
+%%   Commercial at \@     Left bracket  \[     Backslash     \\
+%%   Right bracket \]     Circumflex    \^     Underscore    \_
+%%   Grave accent  \`     Left brace    \{     Vertical bar  \|
+%%   Right brace   \}     Tilde         \~}
+
+
+\documentclass[final,leqno]{siamltex}
+
+% definitions used by included articles, reproduced here for 
+% educational benefit, and to minimize alterations needed to be made
+% in developing this sample file.
+
+\newcommand{\pe}{\psi}
+\def\d{\delta} 
+\def\ds{\displaystyle} 
+\def\e{{\epsilon}} 
+\def\eb{\bar{\eta}}  
+\def\enorm#1{\|#1\|_2} 
+\def\Fp{F^\prime}  
+\def\fishpack{{FISHPACK}} 
+\def\fortran{{FORTRAN}} 
+\def\gmres{{GMRES}} 
+\def\gmresm{{\rm GMRES($m$)}} 
+\def\Kc{{\cal K}} 
+\def\norm#1{\|#1\|} 
+\def\wb{{\bar w}} 
+\def\zb{{\bar z}} 
+
+% some definitions of bold math italics to make typing easier.
+% They are used in the corollary.
+
+\def\bfE{\mbox{\boldmath$E$}}
+\def\bfG{\mbox{\boldmath$G$}}
+
+\usepackage{amsfonts}
+
+\title{Nondeterministic computation}
+
+% The thanks line in the title should be filled in if there is
+% any support acknowledgement for the overall work to be included
+% This \thanks is also used for the received by date info, but
+% authors are not expected to provide this.
+
+\author{Peifeng Wang\thanks{Guanghua Road 1\#, 34-1-3-5, Yanta District, Xi'an, Shaanxi, P. R. China 710075 ({\tt peifeng\_w@yahoo.com})}}
+
+\begin{document}
+
+\maketitle
+
+\begin{abstract}
+The execution of an algorithm on computing machines is studied. By Cantor's diagonal argument, we show that, the number of executions within a computation on a nondeterministic Turing machine is asymptotically greater than the number of steps within a computation on a deterministic Turing machine. Thus a nondeterministic machine can have more computing power than a deterministic machine, therefore suggesting $P\neq NP$.
+\end{abstract}
+
+\begin{keywords} 
+Nondeterministic
+\end{keywords}
+
+\begin{AMS}
+
+\end{AMS}
+
+\pagestyle{myheadings}
+\thispagestyle{plain}
+\markboth{}{}
+
+
+\section{Introduction}
+Turing machines take strings as input for its computation. The complexity of a computation is measured as a function of the size of the input string. In general, a machine has a finite nonempty set of input alphabet $\Sigma$. $\Sigma^*$ is the set of finite string over $\Sigma$. For a string $\omega\in\Sigma^*$, $|\omega|$ is the length of string $\omega$. For a set X, $|X|$ is its cardinality, a sequence over X is a sequence whose terms are elements of X. Let $\mathbb{N}$ be the set of natural numbers.
+
+\begin{proposition} 
+%\label{th:prop}
+The length of string $\omega$ is a natural number. i.e. $|\omega|\in\mathbb{N}$
+\end{proposition}
+
+Every string $\omega\in\Sigma^*$ can be writen as a sequence of symbols $s_1...s_n$ where $\{s_i\in\Sigma|i\in \mathbb{N} ~ and ~ 1 \le i\le n=|\omega|\}$. Each of these symbols is an alphabet at a specific position within $\omega$. The same alphabet at different positions represent distinct symbols. To encode the alphabet and position of a symbol of $\omega$, a set
+$S(\omega)=\{s_iz^i|z\notin\Sigma~ \wedge~ i\in\mathbb{N}~ \wedge~ 1 \le i\le |\omega|~ \wedge~ s_i\in\Sigma~ is~ the~ ith~ symbol~ of~ \omega\}$ can be constructed.
+
+\begin{proposition} 
+\label{prop:Card_SW}
+The cardinality of $S(\omega)$ equals to the length of string $\omega$. i.e. $|S(\omega)|=|\omega|$
+\end{proposition}
+
+Then $S(\omega)$ is a countable set.
+
+For a machine M, a computation over string $\omega\in\Sigma^*$ is equivalent to a computation over the set $S(\omega)$. We study computations associated with sequences over $S(\omega)$.
+
+\section{Computation on a deterministic Turing machine (DTM)}
+
+On a DTM, an algorithm defines an order in which elements of input set $S(\omega)$ are read and computed. In each computation, the algorithm reads the elements of input set $S(\omega)$ in a single sequence. This sequence of operation is called an execution. One computation on a DTM can have a single execution..
+
+\begin{proposition} 
+\label{prop:DTM_Countable}
+Deterministic Turing machine can only compute over a countable input set.
+\end{proposition}
+
+\begin{proof}
+A deterministic Turing machine executes in a step-by-step manner, it can be shown that each of the steps is associated to a unique natural number.
+
+A deterministic Turing machine is a tuple $(\Sigma,\Gamma,Q,\delta)$, where Q is nonempty finite set of states containing $q_0,q_{accept},q_{reject}$, $\Gamma$ is nonempty finite set of tape alphabet, $\delta$ is the transition function
+
+$\delta:(Q-\{q_{accept},q_{reject}\})\times\Gamma->Q\times\Gamma\times\{1,-1\}$
+
+With the internal state $q\in Q$ and scanned symbol $s\in\Gamma$ as input, $\delta$ defines the next state and symbol to be scanned.
+
+We assign natural numbers to the computation states:
+
+1)The initial state $q_0$ is associated with natural number 0.
+
+2)if $q^-\neq q_{accept}$ and $q^-\neq q_{reject}$ is associated with natural number i, then $q^+$ of $(q^+,s',h)=\delta(q^-,s)$ is associated with number i+1.
+
+Then with mathematical induction, the state of each step in an execution can be associated with a unique natural numbers. Thus an execution can have at most countable steps, and can compute only over countable input set.
+
+\end{proof}
+
+Essentially, the deterministic transition function enables the application of mathemetical induction to prove theorem \ref{prop:DTM_Countable}. Such property is absent on a nondeterministic machine.
+
+\section{Computation on a nondeterministic Turing machine (NDTM)}
+On a nondeterministic Turing machine(NDTM) $M_N$, multiple transitions are allowed at any "moment``, and multiple sequences of transitions are executed. Each of the sequences of transitions is called an execution. A computation can have multiple executions.
+
+\begin{proposition} 
+\label{prop:NDTM_uncountable}
+In a computation on a NDTM, every sequence over the input set $S(\omega)$ has a distinct execution.
+\end{proposition}
+
+\begin{proof}
+We track all of the executions by recording the sequence of input symbols read by the NDTM.
+
+For each execution e, there is an order in which the machine $M_N$ reads the symbols of input set $S(\omega)$. Initially, execution e sets its record R(e) to an empty string, when execution e scans an input symbol $\alpha\in S(\omega)$, the symbol is appended to the existing R(e). Thus the records R of all executions are sequences over the input set $S(\omega)$, the BNF grammar of the recorded sequence is
+
+$\begin{array}{ccc}
+R&::=&R\alpha|\alpha\\
+\alpha&::=&elements~ of~ S(\omega)
+\end{array}
+$
+
+Then R includes all strings whose alphabets are elements of $S(\omega)$. Every string $r\in R$ is a record of an execution e, then e is the corresponding execution of r.
+
+For 2 exeuctions $e_1$ and $e_2$, if $e_1= e_2$, then they have the same record string $R(e_1)= R(e_2)$. Equivalently, if $R(e_1)\neq R(e_2)$, $e_1\neq e_2$.
+
+\end{proof}
+
+A computation on a NDTM contains the set of all executions.
+
+\section{$P\neq NP$}
+
+To put it simply, the number of executions within a computation on a NDTM is asymptotically greater than the number of steps within a computation on a DTM.
+
+In general, for fixed $k\in\mathbb{N}$, the kth Cartesian power of a set X is $X^k=\{(x_1,...,x_k)|~ x_i\in X~ for~ all~ 1\le i\le k\}$, if X is a finite set of cardinality $|X|$, the cardinality of its Cartesian power is $|X^k|=|X|^k$. If X is a countably infinite set and k is finite, its Cartesian power $X^k$ is still a countable set.
+
+On a computing machine with input $\omega$, an execution within $|\omega|^k=|S(\omega)|^k$ steps can only compute the kth Cartesian power of the input set $S(\omega)$, i.e. $(S(\omega))^k$. Let P(n) be a polynomial of finite degree, there exists finite $k\in\mathbb{N}$ such that $|\omega|^k$ is asymptotically greater than $P(|\omega|)$
+
+$\lim_{|\omega|\rightarrow\infty}|\omega|^k > \lim_{|\omega|\rightarrow\infty}P(|\omega|)$
+
+Let $E(\omega)$ be the set of all executions of a computation on a NDTM with input $\omega$. If the input string $\omega$ is infinitely long, we have 1) from proposition \ref{prop:Card_SW}, $S(\omega)$ is countably infinite. 2) from Cantor's diagonal argument, the set of all sequences over $S(\omega)$ is uncountable. 3) from theorem \ref{prop:NDTM_uncountable}, the size of $E(\omega)$ is greater than the size of the set of all sequences over $S(\omega)$, thus $E(\omega)$ is uncountable. 4) any finite Cartesian power of $S(\omega)$ is countable. Thus for any finite k,
+
+$\lim_{|\omega|\rightarrow \infty}|E(\omega)|>\lim_{|\omega|\rightarrow \infty}|S(\omega)|^k=\lim_{|\omega|\rightarrow \infty}|\omega|^k$
+
+then for any polynomial P(n) of finite degree
+
+$\lim_{|\omega|\rightarrow \infty}|E(\omega)|>\lim_{|\omega|\rightarrow \infty}P(|\omega|)$
+
+On the other hand, from theorem \ref{prop:DTM_Countable}, a computation on a DTM can have only countable steps.
+
+Thus in the case of infinitely long input string, the number of executions on a NDTM is strictly greater than the number of steps on a DTM, thus nondeterministic machine can have more computing power than a deterministic machine.
+
+The above case of infinitely long input string also applies when the input set $S(\omega)$ is enough large. In specific, for any polynomial $P(n)$ of finite degree, there exists m, k, for all $|S(\omega)|>m$, 1) the number of steps that a DTM can compute within polynomial time $P(|\omega|)$ is less than $|\omega|^k$ for some k. 2)  the size of kth Cartesian power of $S(\omega)$ is strictly less than the number of all executions of a computation on a NDTM. Thus $P<NP$
+
+\section*{Acknowledgments}
+ 
+ 
+\begin{thebibliography}{10} 
+\bibitem{Turing} {\sc Barker-Plummer, David}, 
+{\em Turing Machines}, The Stanford Encyclopedia of Philosophy (Summer 2013 Edition), Edward N. Zalta (ed.), URL = http://plato.stanford.edu/archives/sum2013/entries/turing-machine/
+ 
+\end{thebibliography} 
+
+\end{document} 
+
